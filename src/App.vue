@@ -64,10 +64,9 @@ export default {
   },
   beforeMount() {
     this.$store.commit("addInvoice", this.invoice);
-    console.log(this.invoice);
   },
   mounted() {
-    console.log("has mounted", this.invoice);
+    console.log("has mounted");
   }
 };
 </script>

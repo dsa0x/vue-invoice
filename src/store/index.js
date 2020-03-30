@@ -19,6 +19,19 @@ export default new Vuex.Store({
       address: ""
     }
   },
+  getters: {
+    getInvoiceItems({invoice}) {
+
+   const items = invoice.items.map(item => {
+      item.SubAmount = (parseInt(item.price) * parseInt(item.quantity)).toFixed(
+        2
+      );
+      if (!item._tax) item._tax = 1;
+      return item
+    });
+      return items
+    }
+  },
   mutations: {
     addInvoice(state, invoice) {
       state.invoice = { ...state.invoice, ...invoice };
