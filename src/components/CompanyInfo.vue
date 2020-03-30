@@ -1,18 +1,19 @@
 <template>
   <div class="main">
     <div class="desc big-font font-weight-bold text-uppercase">
-      {{ company }}
+      {{ company.name }}
     </div>
-    <div class="addr">{{ address }}</div>
+    <div class="addr">{{ company.address }}</div>
   </div>
 </template>
 
 <script>
 export default {
   name: "header",
-  props: ["company", "address"],
   data() {
-    return {};
+    return {
+      company: this.$store.state.company
+    };
   }
 };
 </script>

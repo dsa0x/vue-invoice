@@ -12,6 +12,7 @@
     "bootstrap": "^4.4.1",
     "bootstrap-vue": "^2.9.0",
     "core-js": "^3.6.4",
+    "date-fns": "^2.11.1",
     "jquery": "^3.4.1",
     "popper.js": "^1.16.1",
     "vue": "^2.6.11",

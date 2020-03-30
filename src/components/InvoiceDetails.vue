@@ -4,31 +4,46 @@
       <div class="customer">
         <span class="light-grey">Billed To:</span>
         <span class=""> {{ customer.name }}</span>
-        <span> {{ customer.company || "Daredev INC" }} </span>
+        <span> {{ customer.company }} </span>
         <span> {{ customer.email }}</span>
       </div>
       <div class="inv">
         <span class="light-grey">Invoice no:</span>
-        <span>123</span>
+        <span>{{ invoiceNo }}</span>
       </div>
       <div class="due">
         <span class="light-grey">Due date:</span>
-        <span>12.1.2020</span>
+        <span>{{ date }}</span>
       </div>
     </div>
     <div class="amount">
-      <span class="light-grey">Amount Due (USD)</span>
-      <span class="big-font font-weight-bold">€5.000,00</span>
+      <span class="light-grey">Amount Due (EUR)</span>
+      <span class="big-font font-weight-bold">€{{ total }}</span>
     </div>
   </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
+import { format } from "date-fns";
 export default {
   name: "InvoiceDetails",
-  props: ["customer"],
+  //   props: ["customer"],
   data() {
-    return {};
+    return {
+      invoiceNo: this.$store.state.invoice.id,
+      customer: this.$store.state.customer,
+      date: format(new Date(), "MMM, dd yyyy")
+    };
+  },
+  computed: {
+    ...mapGetters({
+      invoiceItems: "getInvoiceItems",
+      subTotal: "getSubTotal",
+      total: "getTotal",
+      totalTaxes: "getTotalTaxes"
+    })
   }
 };
 </script>

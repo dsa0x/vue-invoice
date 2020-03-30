@@ -1,11 +1,12 @@
 <template>
   <b-container>
-    <CompanyInfo :address="company.address" :company="company.name" />
+    <CompanyInfo />
+    <Card />
     <b-row class="big-top-margin">
-      <InvoiceDetails :customer="customer" />
+      <InvoiceDetails />
     </b-row>
     <b-row>
-      <InvoiceItems :items="invoiceItems" />
+      <InvoiceItems />
     </b-row>
   </b-container>
 </template>
@@ -14,19 +15,24 @@
 import CompanyInfo from "./CompanyInfo.vue";
 import InvoiceItems from "./InvoiceItems.vue";
 import InvoiceDetails from "./InvoiceDetails.vue";
+import Card from "./Card";
 
 export default {
   name: "Invoice",
-  props: ["company", "invoice", "customer"],
+  props: ["invoice", "company", "customer"],
   components: {
     CompanyInfo,
     InvoiceItems,
-    InvoiceDetails
+    InvoiceDetails,
+    Card
   },
   data() {
-    return {
-      invoiceItems: this.$store.state.invoice.items
-    };
+    return {};
+  },
+  beforeMount() {
+    this.$store.commit("addInvoice", this.invoice);
+    this.$store.commit("addCustomer", this.customer);
+    this.$store.commit("addCompany", this.company);
   }
 };
 </script>

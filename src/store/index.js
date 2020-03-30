@@ -10,36 +10,79 @@ export default new Vuex.Store({
       email: ""
     },
     invoice: {
-      id: "",
+      id: 1,
       items: [],
-      dueDate: ""
+      dueDate: "",
+      totalAmount: null
     },
     company: {
-      name: "sdd",
+      name: "",
       address: ""
     }
   },
   getters: {
-    getInvoiceItems({invoice}) {
-
-   const items = invoice.items.map(item => {
-      item.SubAmount = (parseInt(item.price) * parseInt(item.quantity)).toFixed(
-        2
-      );
-      if (!item._tax) item._tax = 1;
-      return item
-    });
-      return items
+    getInvoiceItems({ invoice }) {
+      const items = invoice.items.map(item => {
+        item.SubAmount = (
+          parseInt(item.price) * parseInt(item.quantity)
+        ).toFixed(2);
+        if (!item._tax) item._tax = 0;
+        return item;
+      });
+      return items;
+    },
+    getSubTotal({ invoice }) {
+      if (invoice.items) {
+        return invoice.items
+          .reduce((acc, current) => acc + parseFloat(current.SubAmount), 0)
+          .toFixed(2);
+      } else {
+        return 0;
+      }
+    },
+    getTotal({ invoice }, { getSubTotal, getTotalTaxes }) {
+      if (invoice.items) {
+        return (parseFloat(getSubTotal) + parseFloat(getTotalTaxes)).toFixed(2);
+      } else {
+        return 0;
+      }
+    },
+    getTotalTaxes({ invoice }) {
+      if (invoice.items) {
+        return invoice.items
+          .reduce((acc, cur) => acc + parseFloat(cur._tax), 0)
+          .toFixed(2);
+      } else {
+        return 0;
+      }
     }
   },
   mutations: {
     addInvoice(state, invoice) {
       state.invoice = { ...state.invoice, ...invoice };
+    },
+    addCustomer(state, customer) {
+      state.customer = { ...state.customer, ...customer };
+    },
+    addCompany(state, company) {
+      state.company = { ...state, ...company };
+    },
+    setTotalAmount(state, totalAmount) {
+      state.invoice = { ...state.invoice, totalAmount };
     }
   },
   actions: {
     addInvoice({ commit }) {
       commit("addInvoice");
+    },
+    addCustomer({ commit }) {
+      commit("addCustomer");
+    },
+    addCompany({ commit }) {
+      commit("addCompany");
+    },
+    setTotalAmount({ commit }) {
+      commit("setTotalAmount");
     }
   },
   modules: {}

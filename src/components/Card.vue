@@ -18,8 +18,8 @@ export default {
 
 <style lang="scss" scoped>
 .my-card {
-  height: 20rem;
-  border-radius: 20px;
+  height: 5rem;
+  border-radius: 10px;
   background-size: cover;
   overflow: hidden;
 

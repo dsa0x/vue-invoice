@@ -18,25 +18,8 @@ export default {
         name: "ClaimBuddy",
         address: "18, Karlwiechert Allee, 30167, Hannover, Germany."
       },
-      items: [
-        {
-          Description: "Macbook 2019 Pro",
-          price: "3000",
-          quantity: "1"
-        },
-        {
-          Description: "Macbook 2018 Pro",
-          price: "2000",
-          quantity: "2"
-        },
-        {
-          Description: "Macbook 2018 Pro",
-          price: "2000",
-          quantity: "2"
-        }
-      ],
       invoice: {
-        id: 1,
+        id: 102345,
         items: [
           {
             Description: "Macbook 2019 Pro",
@@ -47,26 +30,17 @@ export default {
             Description: "Macbook 2018 Pro",
             price: "2000",
             quantity: "2"
-          },
-          {
-            Description: "Macbook 2018 Pro",
-            price: "2000",
-            quantity: "2"
           }
         ],
-        dueDate: "12.1.20"
+        dueDate: "12.1.20",
+        currency: "euro"
       },
       customer: {
         name: "Stefan Digga",
-        email: "stef@aol.com"
+        email: "stef@aol.com",
+        company: "DSA Inc"
       }
     };
-  },
-  beforeMount() {
-    this.$store.commit("addInvoice", this.invoice);
-  },
-  mounted() {
-    console.log("has mounted");
   }
 };
 </script>
@@ -85,6 +59,7 @@ export default {
   border: solid 1px #eee;
   border-radius: 10px;
   padding: 4rem 5rem;
+  min-width: 600px;
 }
 
 * {
