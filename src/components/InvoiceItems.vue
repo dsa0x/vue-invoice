@@ -1,37 +1,38 @@
 <template>
   <div class="main-content">
-    <b-table-simple class="inv-table table-striped" aria-colcount="4">
-      <b-thead :class="`dark-bg-${variant}`">
-        <b-tr>
-          <b-th>Description</b-th>
-          <b-th>Price</b-th>
-          <b-th>Quantity</b-th>
-          <b-th>Sub Amount</b-th>
-        </b-tr>
-      </b-thead>
-      <b-tbody>
-        <b-tr v-for="(item, i) in invoiceItems" :key="i">
-          <b-td>{{ item.description }}</b-td>
-          <b-td>{{ item.price | formatCurrency(currency.code) }}</b-td>
-          <b-td>{{ item.quantity }}</b-td>
-          <b-td>{{ item.SubAmount | formatCurrency(currency.code) }}</b-td>
-        </b-tr>
-      </b-tbody>
-    </b-table-simple>
+    <table class="inv-table" aria-colcount="4">
+      <thead :class="`dark-bg-${variant}`">
+        <tr>
+          <th>Description</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Sub Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          v-for="(item, i) in invoiceItems"
+          :key="i"
+          :class="darken(i) ? 'light-grey-bg' : ''"
+        >
+          <td>{{ item.description }}</td>
+          <td>{{ item.price | formatCurrency(currency.code) }}</td>
+          <td>{{ item.quantity }}</td>
+          <td>{{ item.SubAmount | formatCurrency(currency.code) }}</td>
+        </tr>
+      </tbody>
+    </table>
 
-    <div class="d-flex summary flex-column align-items-end">
-      <div class="d-flex justify-content-between">
+    <div class="summary">
+      <div class="">
         <span>Sub Total</span>
         <span> {{ subTotal | formatCurrency(currency.code) }}</span>
       </div>
-      <div class="d-flex justify-content-between">
+      <div class="">
         <span>Tax</span>
         <span> {{ totalTaxes | formatCurrency(currency.code) }}</span>
       </div>
-      <div
-        class="d-flex justify-content-between font-weight-bold"
-        :class="`dark-bg-${variant}`"
-      >
+      <div class=" bold-font" :class="`dark-bg-${variant}`">
         <span>Total ({{ currency.code }})</span>
         <span> {{ total | formatCurrency(currency.code) }}</span>
       </div>
@@ -48,7 +49,6 @@ export default {
   props: ["currency", "variant"],
   data() {
     return {
-      currentStyle: "v",
       fields: ["Description", "price", "quantity", "SubAmount"]
     };
   },
@@ -68,6 +68,11 @@ export default {
       if (!value) return;
       return currencyFormatter.format(value, { code: currency });
     }
+  },
+  methods: {
+    darken(i) {
+      return i % 2;
+    }
   }
 };
 </script>
@@ -77,14 +82,23 @@ export default {
   width: 100%;
 }
 
+.inv-table {
+  width: 100%;
+  margin-bottom: 1rem;
+  border-collapse: collapse;
+}
+
 .summary {
   display: flex;
+  flex-direction: column;
   text-align: right;
-  justify-content: flex-end;
+  align-items: flex-end;
 
   & div {
     text-align: right;
     width: 25rem;
+    display: flex;
+    justify-content: space-between;
 
     &:last-of-type {
       margin-top: 2rem;

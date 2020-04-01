@@ -1,16 +1,7 @@
 <template>
   <div class="main">
-    <div
-      class="desc big-font font-weight-bold text-uppercase"
-      :class="`gradient-bg-${variant}`"
-    >
-      <b-img
-        v-if="logo"
-        class="logo"
-        :src="logo"
-        fluid
-        :alt="company.name"
-      ></b-img>
+    <div class="desc big-font bold-font" :class="`gradient-bg-${variant}`">
+      <img v-if="logo" class="logo" :src="logo" :alt="company.name" />
       {{ company.name }}
     </div>
     <div class="addr">{{ company.address }}</div>
@@ -44,12 +35,14 @@ export default {
 .logo {
   width: 100%;
   max-width: 40px;
+  height: auto;
 }
 
 .desc {
   font-size: 3rem;
   letter-spacing: 0.3rem;
   letter-spacing: 4px;
+  text-transform: uppercase;
 }
 .addr {
   font-size: 2rem;

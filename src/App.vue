@@ -4,8 +4,8 @@
       :company="company"
       :customer="customer"
       :invoice="invoice"
-      :variant="1"
-      currency="eur"
+      :variant="3"
+      currency="ngn"
     />
   </div>
 </template>

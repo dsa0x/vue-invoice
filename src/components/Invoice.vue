@@ -1,31 +1,20 @@
 <template>
-  <b-container class="main-app">
+  <div class="main-app">
     <CompanyInfo :variant="variant" :logo="logo" />
-    <!-- <Card /> -->
-    <b-row class="big-top-margin">
+    <div class=" row big-top-margin">
       <InvoiceDetails :variant="variant" :currency="getCurrency" />
-    </b-row>
-    <b-row>
+    </div>
+    <div class="row">
       <InvoiceItems :variant="variant" :currency="getCurrency" />
-    </b-row>
-  </b-container>
+    </div>
+  </div>
 </template>
 
 <script>
-import Vue from "vue";
-import { BootstrapVue, IconsPlugin } from "bootstrap-vue";
 import CompanyInfo from "./CompanyInfo.vue";
 import InvoiceItems from "./InvoiceItems.vue";
 import InvoiceDetails from "./InvoiceDetails.vue";
 import currencyFormatter from "currency-formatter";
-
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/css/bootstrap.css";
-import "bootstrap-vue/dist/bootstrap-vue.css";
-
-Vue.use(BootstrapVue);
-// Optionally install the BootstrapVue icon components plugin
-Vue.use(IconsPlugin);
 
 export default {
   name: "Invoice",
@@ -88,7 +77,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "@/styles/_utilities.scss";
+@import "../styles/_utilities.scss";
 .main-app {
   font-size: $font-normal;
   margin: 8rem auto;
@@ -96,10 +85,11 @@ export default {
   border-radius: 10px;
   padding: 4rem 5rem;
   max-width: 768px;
-  min-width: 500px;
+  min-width: 600px;
+  width: 100%;
   box-shadow: 0 1.5rem 4rem $color-grey-primary;
 
-  @media only screen and (max-width: $bp-mobile) {
+  @media only screen and (max-width: 768px) {
     margin: auto;
   }
 }
@@ -107,10 +97,10 @@ export default {
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
 html {
-  box-sizing: border-box;
   font-size: 62.5%;
 }
 
@@ -119,6 +109,18 @@ html {
 
   &:not(:last-child) {
     flex-basis: auto;
+  }
+}
+
+.row {
+  row {
+    display: -ms-flexbox;
+    display: -webkit-box;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    // margin-right: -15px;
+    // margin-left: -15px;
   }
 }
 

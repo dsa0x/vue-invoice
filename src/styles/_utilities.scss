@@ -1,9 +1,20 @@
 .light-grey {
   color: $color-grey-primary;
 }
+.light-grey-bg {
+  background-color: $color-grey-light;
+}
 
 .big-font {
   font-size: 3rem;
+}
+
+.bold-font {
+  font-weight: 700 !important;
+}
+
+.text-uppercase {
+  text-transform: uppercase;
 }
 
 .big-top-margin {

@@ -11,13 +11,17 @@ yarn add vue-slider-component
 
 ### Global registration
 
+```
 import Vue from 'vue'
 import Invoice from 'vue-invoice'
 
 Vue.use(Invoice, { store } )
 
+```
+
 ### Usage
 
+```
 <template>
   <div id="app">
     <Invoice
@@ -28,3 +32,6 @@ Vue.use(Invoice, { store } )
       currency="eur"
     />
   </div>
+  </template>
+
+```

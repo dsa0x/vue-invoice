@@ -2,10 +2,7 @@
   <div class="main-content">
     <div class="customer">
       <span class="light-grey">Bill To:</span>
-      <span
-        class="font-weight-bold text-uppercase"
-        :class="`gradient-bg-${variant}`"
-      >
+      <span class="bold-font text-uppercase" :class="`gradient-bg-${variant}`">
         {{ customer.name }}</span
       >
       <span> {{ customer.description }} </span>
@@ -21,11 +18,9 @@
     </div>
     <div class="amount">
       <span class="light-grey">Total Amount ({{ currency.code }})</span>
-      <span
-        class="big-font font-weight-bold"
-        :class="`gradient-bg-${variant}`"
-        >{{ total | formatCurrency(currency.code) }}</span
-      >
+      <span class="big-font bold-font" :class="`gradient-bg-${variant}`">{{
+        total | formatCurrency(currency.code)
+      }}</span>
     </div>
   </div>
 </template>

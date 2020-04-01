@@ -1,1 +1,3 @@
-/old
+src/assets/
+.DS_Store
+tests
