@@ -1,44 +1,108 @@
 <template>
-  <b-container>
-    <CompanyInfo />
-    <Card />
+  <b-container class="main-app">
+    <CompanyInfo :variant="variant" :logo="logo" />
+    <!-- <Card /> -->
     <b-row class="big-top-margin">
-      <InvoiceDetails />
+      <InvoiceDetails :variant="variant" :currency="getCurrency" />
     </b-row>
     <b-row>
-      <InvoiceItems />
+      <InvoiceItems :variant="variant" :currency="getCurrency" />
     </b-row>
   </b-container>
 </template>
 
 <script>
+import Vue from "vue";
+import { BootstrapVue, IconsPlugin } from "bootstrap-vue";
 import CompanyInfo from "./CompanyInfo.vue";
 import InvoiceItems from "./InvoiceItems.vue";
 import InvoiceDetails from "./InvoiceDetails.vue";
-import Card from "./Card";
+import currencyFormatter from "currency-formatter";
+
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/css/bootstrap.css";
+import "bootstrap-vue/dist/bootstrap-vue.css";
+
+Vue.use(BootstrapVue);
+// Optionally install the BootstrapVue icon components plugin
+Vue.use(IconsPlugin);
 
 export default {
   name: "Invoice",
-  props: ["invoice", "company", "customer"],
+  props: {
+    invoice: {
+      type: Object
+    },
+    company: {
+      type: Object
+    },
+    customer: {
+      type: Object
+    },
+    logo: {
+      default: "",
+      type: String
+    },
+    variant: {
+      type: Number,
+      default: 1
+    },
+    currency: { default: "EUR", type: String }
+  },
   components: {
     CompanyInfo,
     InvoiceItems,
-    InvoiceDetails,
-    Card
+    InvoiceDetails
   },
   data() {
-    return {};
+    return {
+      currencies: null
+    };
   },
-  beforeMount() {
-    this.$store.commit("addInvoice", this.invoice);
-    this.$store.commit("addCustomer", this.customer);
-    this.$store.commit("addCompany", this.company);
+  computed: {
+    getCurrency() {
+      if (this.currencies) {
+        return Object.keys(this.currencies)
+          .filter(cur => {
+            return this.currencies[cur].code == this.currency.toUpperCase();
+          })
+          .map(key => {
+            return this.currencies[key];
+          })
+          .reduce(obj => obj);
+      } else {
+        return {
+          code: "USD",
+          symbol: "$"
+        };
+      }
+    }
+  },
+  mounted() {
+    this.$store.dispatch("addInvoice", this.invoice);
+    this.$store.dispatch("addCustomer", this.customer);
+    this.$store.dispatch("addCompany", this.company);
+    this.currencies = currencyFormatter.currencies;
   }
 };
 </script>
 
 <style lang="scss">
 @import "@/styles/_utilities.scss";
+.main-app {
+  font-size: $font-normal;
+  margin: 8rem auto;
+  border: solid 1px #eee;
+  border-radius: 10px;
+  padding: 4rem 5rem;
+  max-width: 768px;
+  min-width: 500px;
+  box-shadow: 0 1.5rem 4rem $color-grey-primary;
+
+  @media only screen and (max-width: $bp-mobile) {
+    margin: auto;
+  }
+}
 
 * {
   margin: 0;
@@ -60,21 +124,26 @@ html {
 
 .inv-table {
   padding-right: 5rem;
+  margin-top: 2rem;
 
   & thead {
+    margin-top: 2rem;
     & tr {
-    }
+      // background-color: $color-primary-light;
+      text-align: right;
 
-    & tr th {
-      border-top: none;
-      color: $color-grey-primary;
-      font-weight: $font-weight-normal;
-      padding-bottom: 3rem;
-      margin-bottom: 1rem;
-      border-bottom: 1px;
+      & th {
+        border-top: none;
+        color: $color-grey-light !important;
+        background-color: inherit !important;
+        font-weight: $font-weight-bold;
+        padding: 2rem;
+        margin-bottom: 1rem;
+        border-bottom: 1px;
 
-      &:first-of-type {
-        text-align: left;
+        &:first-of-type {
+          text-align: left;
+        }
       }
     }
   }
@@ -85,15 +154,12 @@ html {
     }
 
     & tr {
-      &:first-of-type td {
-        padding-top: 4rem;
-      }
-
       & td {
-        padding: 1.5rem;
+        padding: 2rem;
+        border-bottom: solid 1px $color-grey-light;
+        text-align: right;
         &:first-of-type {
           text-align: left;
-          padding-left: 0;
         }
       }
     }

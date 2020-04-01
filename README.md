@@ -1,29 +1,30 @@
 # vue-invoice
 
-## Project setup
+A simple Invoice component for Vue
+
+### Installation
+
 ```
-npm install
+npm install vue-invoice
+yarn add vue-slider-component
 ```
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+### Global registration
 
-### Compiles and minifies for production
-```
-npm run build
-```
+import Vue from 'vue'
+import Invoice from 'vue-invoice'
 
-### Run your unit tests
-```
-npm run test:unit
-```
+Vue.use(Invoice, { store } )
 
-### Lints and fixes files
-```
-npm run lint
-```
+### Usage
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+<template>
+  <div id="app">
+    <Invoice
+      :company="company"
+      :customer="customer"
+      :invoice="invoice"
+      :variant="1"
+      currency="eur"
+    />
+  </div>

@@ -1,6 +1,16 @@
 <template>
   <div class="main">
-    <div class="desc big-font font-weight-bold text-uppercase">
+    <div
+      class="desc big-font font-weight-bold text-uppercase"
+      :class="`gradient-bg-${variant}`"
+    >
+      <b-img
+        v-if="logo"
+        class="logo"
+        :src="logo"
+        fluid
+        :alt="company.name"
+      ></b-img>
       {{ company.name }}
     </div>
     <div class="addr">{{ company.address }}</div>
@@ -8,12 +18,17 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   name: "header",
+  props: ["logo", "variant"],
   data() {
-    return {
-      company: this.$store.state.company
-    };
+    return {};
+  },
+  computed: {
+    ...mapState({
+      company: state => state.Invoice.company
+    })
   }
 };
 </script>
@@ -26,17 +41,14 @@ export default {
   padding: 3rem 0;
 }
 
+.logo {
+  width: 100%;
+  max-width: 40px;
+}
+
 .desc {
   font-size: 3rem;
   letter-spacing: 0.3rem;
-  background-image: linear-gradient(
-    to right,
-    $color-primary-light,
-    $color-primary-dark
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
   letter-spacing: 4px;
 }
 .addr {

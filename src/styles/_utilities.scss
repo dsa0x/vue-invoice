@@ -9,3 +9,52 @@
 .big-top-margin {
   margin-top: 5rem;
 }
+
+.dark-bg-1 {
+  background-color: $color-primary-light !important;
+  color: $color-grey-light;
+}
+.dark-bg-2 {
+  background-color: $color-primary-light-2 !important;
+  color: $color-grey-light;
+}
+
+.dark-bg-3 {
+  background-color: $color-primary-light-3 !important;
+  color: $color-grey-light;
+}
+
+.gradient-bg-1 {
+  background-image: linear-gradient(
+    to right,
+    $color-primary-light,
+    $color-primary-dark
+  );
+
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.gradient-bg-2 {
+  background-image: linear-gradient(
+    to right,
+    $color-primary-light-2,
+    $color-primary-dark-2
+  );
+
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.gradient-bg-3 {
+  background-image: linear-gradient(
+    to right,
+    $color-primary-light-3,
+    $color-primary-dark-3
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+$bp-mobile: 37.5em;

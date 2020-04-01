@@ -1,16 +1,39 @@
 <template>
   <div class="main-content">
-    <b-table class="inv-table" :items="invoiceItems" :fields="fields">
-    </b-table>
-    <div class="d-flex summary">
-      <div class="d-flex flex-column">
-        <span class="">Sub Total</span> <span class="">Tax</span>
-        <span class="pt-5 font-weight-bold">Total Amount(EUR)</span>
+    <b-table-simple class="inv-table table-striped" aria-colcount="4">
+      <b-thead :class="`dark-bg-${variant}`">
+        <b-tr>
+          <b-th>Description</b-th>
+          <b-th>Price</b-th>
+          <b-th>Quantity</b-th>
+          <b-th>Sub Amount</b-th>
+        </b-tr>
+      </b-thead>
+      <b-tbody>
+        <b-tr v-for="(item, i) in invoiceItems" :key="i">
+          <b-td>{{ item.description }}</b-td>
+          <b-td>{{ item.price | formatCurrency(currency.code) }}</b-td>
+          <b-td>{{ item.quantity }}</b-td>
+          <b-td>{{ item.SubAmount | formatCurrency(currency.code) }}</b-td>
+        </b-tr>
+      </b-tbody>
+    </b-table-simple>
+
+    <div class="d-flex summary flex-column align-items-end">
+      <div class="d-flex justify-content-between">
+        <span>Sub Total</span>
+        <span> {{ subTotal | formatCurrency(currency.code) }}</span>
       </div>
-      <div class="d-flex flex-column">
-        <span> €{{ subTotal }}</span
-        ><span>€{{ totalTaxes }}</span
-        ><span class="pt-5"> €{{ total }}</span>
+      <div class="d-flex justify-content-between">
+        <span>Tax</span>
+        <span> {{ totalTaxes | formatCurrency(currency.code) }}</span>
+      </div>
+      <div
+        class="d-flex justify-content-between font-weight-bold"
+        :class="`dark-bg-${variant}`"
+      >
+        <span>Total ({{ currency.code }})</span>
+        <span> {{ total | formatCurrency(currency.code) }}</span>
       </div>
     </div>
   </div>
@@ -18,11 +41,14 @@
 
 <script>
 import { mapGetters } from "vuex";
+import currencyFormatter from "currency-formatter";
 
 export default {
   name: "items",
+  props: ["currency", "variant"],
   data() {
     return {
+      currentStyle: "v",
       fields: ["Description", "price", "quantity", "SubAmount"]
     };
   },
@@ -33,37 +59,15 @@ export default {
       total: "getTotal",
       totalTaxes: "getTotalTaxes"
     })
-    // subTotal() {
-    //   if (this.invoiceItems) {
-    //     return this.invoiceItems
-    //       .reduce((acc, current) => acc + parseFloat(current.SubAmount), 0)
-    //       .toFixed(2);
-    //   } else {
-    //     return 0;
-    //   }
-    // },
-    // total() {
-    //   if (this.invoiceItems) {
-    //     return (
-    //       parseFloat(this.subTotal) + parseFloat(this.totalTaxes)
-    //     ).toFixed(2);
-    //   } else {
-    //     return 0;
-    //   }
-    // },
-    // totalTaxes() {
-    //   if (this.invoiceItems) {
-    //     return this.invoiceItems
-    //       .reduce((acc, cur) => acc + parseFloat(cur._tax), 0)
-    //       .toFixed(2);
-    //   } else {
-    //     return 0;
-    //   }
-    // }
   },
   mounted() {
-    this.$store.commit("setTotalAmount", parseInt(this.total));
-    console.log(this.$store.state);
+    this.$store.dispatch("setTotalAmount", parseInt(this.total));
+  },
+  filters: {
+    formatCurrency: (value, currency) => {
+      if (!value) return;
+      return currencyFormatter.format(value, { code: currency });
+    }
   }
 };
 </script>
@@ -77,14 +81,19 @@ export default {
   display: flex;
   text-align: right;
   justify-content: flex-end;
-  padding-right: 4.5rem;
 
   & div {
-    padding-bottom: 2rem;
     text-align: right;
+    width: 25rem;
 
-    &:first-of-type {
-      padding-right: 5rem;
+    &:last-of-type {
+      margin-top: 2rem;
+    }
+
+    & span {
+      display: inline-block;
+      padding: 1.5rem;
+      flex-basis: 50%;
     }
   }
 }
