@@ -58,6 +58,7 @@ export default {
   filters: {
     formatCurrency: (value, currency) => {
       if (!value) return;
+
       return currencyFormatter.format(value, { code: currency });
     }
   }

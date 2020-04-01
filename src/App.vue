@@ -5,7 +5,7 @@
       :customer="customer"
       :invoice="invoice"
       :variant="3"
-      currency="ngn"
+      currency="eur"
     />
   </div>
 </template>

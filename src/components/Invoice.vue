@@ -36,7 +36,7 @@ export default {
       type: Number,
       default: 1
     },
-    currency: { default: "EUR", type: String }
+    currency: { default: "USD", type: String }
   },
   components: {
     CompanyInfo,
@@ -88,7 +88,6 @@ export default {
   min-width: 600px;
   width: 100%;
   box-shadow: 0 1.5rem 4rem $color-grey-primary;
-
   @media only screen and (max-width: 768px) {
     margin: auto;
   }

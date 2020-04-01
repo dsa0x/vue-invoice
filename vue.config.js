@@ -1,5 +1,7 @@
 module.exports = {
   css: {
+    extract: false,
+
     loaderOptions: {
       sass: {
         prependData: `@import "@/styles/main.scss";`
@@ -7,6 +9,11 @@ module.exports = {
       scss: {
         prependData: `@import "@/styles/main.scss";`
       }
+    }
+  },
+  configureWebpack: {
+    optimization: {
+      splitChunks: false
     }
   }
 };
